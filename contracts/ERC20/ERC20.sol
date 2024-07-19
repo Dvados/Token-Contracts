@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {IERC20} from "./IERC20.sol";
-import {IERC20Metadata} from "./IERC20Metadata.sol";
+import {IERC20Metadata} from "./extensions/IERC20Metadata.sol";
 
 abstract contract ERC20 is IERC20, IERC20Metadata {
     string public name;
