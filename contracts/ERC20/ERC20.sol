@@ -2,8 +2,9 @@
 pragma solidity ^0.8.24;
 
 import {IERC20} from "./IERC20.sol";
+import {IERC20Metadata} from "./IERC20Metadata.sol";
 
-abstract contract ERC20 is IERC20 {
+abstract contract ERC20 is IERC20, IERC20Metadata {
     string public name;
     string public symbol;
     uint8 public immutable decimals;
@@ -24,14 +25,6 @@ abstract contract ERC20 is IERC20 {
     // -------------------------------
     // ERC20 LOGIC
 
-    function approve(address spender, uint256 amount) public virtual returns(bool) {
-        allowance[msg.sender][spender] = amount;
-
-        emit Approval(msg.sender, spender, amount);
-
-        return true;
-    }
-
     function transfer(address to, uint256 amount) public virtual returns(bool) {
         balanceOf[msg.sender] -= amount;
         
@@ -40,6 +33,14 @@ abstract contract ERC20 is IERC20 {
         }
 
         emit Transfer(msg.sender, to, amount);
+
+        return true;
+    }
+
+    function approve(address spender, uint256 amount) public virtual returns(bool) {
+        allowance[msg.sender][spender] = amount;
+
+        emit Approval(msg.sender, spender, amount);
 
         return true;
     }
