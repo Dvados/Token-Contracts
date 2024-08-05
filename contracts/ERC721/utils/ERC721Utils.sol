@@ -10,7 +10,7 @@ library ERC721Utils {
         address to, 
         uint256 tokenId, 
         bytes memory data
-        ) internal returns(bool) {
+    ) internal returns(bool) {
         if(to.code.length > 0) {
             try IERC721Receiver(to).onERC721Received(operator, from, tokenId, data) returns(bytes4 retval) {
                 return retval == IERC721Receiver.onERC721Received.selector;

@@ -64,16 +64,12 @@ abstract contract ERC721 is ERC165, IERC721, IERC721Metadata {
 
         require(_owner == msg.sender || isApprovedForAll[_owner][msg.sender], "Not approved or owner!");
 
-        require(spender != _owner, "Cannot approve to self!");
-
         getApproved[tokenId] = spender;
 
         emit Approval(_owner, spender, tokenId);
     }
 
     function setApprovalForAll(address operator, bool approved) public virtual {
-        require(msg.sender != operator, "Cannot approve to self!");
-
         isApprovedForAll[msg.sender][operator] = approved;
 
         emit ApprovalForAll(msg.sender, operator, approved);
@@ -168,18 +164,5 @@ abstract contract ERC721 is ERC165, IERC721, IERC721Metadata {
         delete getApproved[tokenId];
 
         emit Transfer(owner, address(0), tokenId);
-    }
-}
-
-// -------------------------------
-
-abstract contract ERC721TokenReceiver is IERC721Receiver {
-    function onERC721Received(
-        address,
-        address,
-        uint256,
-        bytes calldata
-    ) external virtual returns (bytes4) {
-        return ERC721TokenReceiver.onERC721Received.selector;
     }
 }
